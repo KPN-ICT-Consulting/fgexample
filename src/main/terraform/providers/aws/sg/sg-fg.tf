@@ -21,28 +21,45 @@
 # * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #*/
 
-variable "vpc_security_group_ids" {
-	description = "The VPC SG ids"
+# ALB Security group
+# This is the group you need to edit if you want to restrict access to your application
+resource "aws_security_group" "sg_alb" {
+  	name        			= "TF-ECS-ALB"
+  	description 			= "Controls access to the App ALB"
+  	vpc_id      			= "${var.vpc_id}"
+
+  	ingress {
+    	protocol    		= "tcp"
+    	from_port   		= 80
+    	to_port     		= 80
+    	cidr_blocks 		= ["0.0.0.0/0"]
+  	}
+
+  	egress {
+    	from_port 			= 0
+    	to_port   			= 0
+    	protocol  			= "-1"
+    	cidr_blocks 		= ["0.0.0.0/0"]
+  	}
 }
-variable "db_configuration" {
-	description = "The configuration of the application db to deploy to RDS"
-	type = "map"
-}
-variable "db_options" {
-	description = "The database options"
-	type = "list"
-}
-variable "db_parameters" {
-	description = "The database parameters"
-	type = "list"
-}
-variable "subnet_ids" {
-	description = ""
-	type = "list"
-}
-#variable "cloudwatch_prefix" {
-#	description = "Prefix for Cloudwatch to separate log groups"
-#}
-variable "isStaging" {
-	description = "set to true if the Staging environment should be created. For Production set to false."
+
+# Traffic to the ECS Cluster should only come from the ALB
+resource "aws_security_group" "sg_ecs_tasks" {
+	name        			= "TF-ECS-TASKS"
+  	description 			= "Allow inbound access from the ALB only"
+  	vpc_id      			= "${var.vpc_id}"
+
+  	ingress {
+    	protocol        	= "tcp"
+    	from_port       	= "${var.app_port}"
+    	to_port         	= "${var.app_port}"
+    	security_groups 	= ["${aws_security_group.sg_alb.id}"]
+  	}
+
+  	egress {
+    	protocol    		= "-1"
+    	from_port   		= 0
+    	to_port     		= 0
+    	cidr_blocks 		= ["0.0.0.0/0"]
+  	}
 }

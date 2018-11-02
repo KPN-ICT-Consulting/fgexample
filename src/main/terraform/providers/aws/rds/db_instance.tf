@@ -43,7 +43,7 @@ resource "aws_db_instance" "db_instance" {
 	
 	#snapshot_identifier 				= "${var.snapshot_identifier}"
 	
-	#vpc_security_group_ids 				= ["${var.vpc_security_group_ids}"]
+	vpc_security_group_ids 				= ["${var.vpc_security_group_ids}"]
 	db_subnet_group_name   				= "${var.db_configuration["db.subnet_group_name"]}"
 	parameter_group_name   				= "${var.db_configuration["db.parameter_group_name"]}"
 	option_group_name      				= "${var.db_configuration["db.option_group_name"]}"

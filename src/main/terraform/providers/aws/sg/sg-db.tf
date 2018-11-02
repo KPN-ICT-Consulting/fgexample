@@ -21,28 +21,23 @@
 # * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #*/
 
-variable "vpc_security_group_ids" {
-	description = "The VPC SG ids"
-}
-variable "db_configuration" {
-	description = "The configuration of the application db to deploy to RDS"
-	type = "map"
-}
-variable "db_options" {
-	description = "The database options"
-	type = "list"
-}
-variable "db_parameters" {
-	description = "The database parameters"
-	type = "list"
-}
-variable "subnet_ids" {
-	description = ""
-	type = "list"
-}
-#variable "cloudwatch_prefix" {
-#	description = "Prefix for Cloudwatch to separate log groups"
-#}
-variable "isStaging" {
-	description = "set to true if the Staging environment should be created. For Production set to false."
+# Traffic to the Database should only come from the ECS cluster
+resource "aws_security_group" "sg_db" {
+	name        			= "TF-WP-DB"
+  	description 			= "Allow inbound access from the ECS cluster only"
+  	vpc_id      			= "${var.vpc_id}"
+
+  	ingress {
+    	protocol        	= "tcp"
+    	from_port       	= "${var.db_port}"
+    	to_port         	= "${var.db_port}"
+    	security_groups 	= ["${aws_security_group.sg_ecs_tasks.id}"]
+  	}
+
+  	egress {
+    	protocol    		= "-1"
+    	from_port   		= 0
+    	to_port     		= 0
+    	cidr_blocks 		= ["0.0.0.0/0"]
+  	}
 }

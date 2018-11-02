@@ -39,7 +39,7 @@ module "aws" {
 	
 	isStaging			= "${var.staging}"
 	region 				= "BRANCH_BASED_REGION"
-  	vpc_id 				= "${data.terraform_remote_state.initial.vpc_id}"
+  	vpc_id 				= "${data.terraform_remote_state.initial.vpc_id[0]}"
   	red_subnet_ids		= "${data.terraform_remote_state.initial.red_subnet_ids}"
   	orange_subnet_ids	= "${data.terraform_remote_state.initial.orange_subnet_ids}"
   	

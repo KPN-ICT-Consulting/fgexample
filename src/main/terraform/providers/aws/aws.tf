@@ -27,19 +27,32 @@ provider "aws" {
     #	session_name = "SESSION_NAME"
     #	external_id  = "EXTERNAL_ID"
   	#}
-	region 				= "${var.region}"
+	region 					= "${var.region}"
+}
+
+module "security" {
+#outs:
+#     module.security.sg_alb_id
+#     module.security.sg_ecs_tasks_id
+#     module.security.sg_db_id
+	source = "./sg"
+	
+	vpc_id					= "${var.vpc_id}"
+	db_port 				= "${var.db_configuration["db.port"]}"
+	app_port 				= "${var.app_configuration["app.port"]}"
 }
 
 module "rds" {
 	source = "./rds"
 	
-	db_configuration	= "${var.db_configuration}"
-	db_options			= "${var.db_options}"
-	db_parameters		= "${var.db_parameters}"
+	db_configuration		= "${var.db_configuration}"
+	db_options				= "${var.db_options}"
+	db_parameters			= "${var.db_parameters}"
 	
-	subnet_ids			= "${var.orange_subnet_ids}"
+	subnet_ids				= "${var.orange_subnet_ids}"
+	vpc_security_group_ids	= "${module.security.sg_db_id}"
 	
-	isStaging			= "${var.isStaging}"
+	isStaging				= "${var.isStaging}"
 }
 
 #module "fg" {

@@ -21,28 +21,18 @@
 # * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #*/
 
-variable "vpc_security_group_ids" {
-	description = "The VPC SG ids"
+#
+# Root outputs
+#
+output "sg_alb_id" {
+	description = "The ID of the SG Application Loadbalancer as configured by TF"
+	value 		= "${aws_security_group.sg_alb.id}"
 }
-variable "db_configuration" {
-	description = "The configuration of the application db to deploy to RDS"
-	type = "map"
+output "sg_ecs_tasks_id" {
+	description = "The ID of the SG ECS cluster as configured by TF"
+	value 		= "${aws_security_group.sg_ecs_tasks.id}"
 }
-variable "db_options" {
-	description = "The database options"
-	type = "list"
-}
-variable "db_parameters" {
-	description = "The database parameters"
-	type = "list"
-}
-variable "subnet_ids" {
-	description = ""
-	type = "list"
-}
-#variable "cloudwatch_prefix" {
-#	description = "Prefix for Cloudwatch to separate log groups"
-#}
-variable "isStaging" {
-	description = "set to true if the Staging environment should be created. For Production set to false."
+output "sg_db_id" {
+	description = "The ID of the SG database as configured by TF"
+	value 		= "${aws_security_group.sg_db.id}"
 }
