@@ -21,8 +21,10 @@
 # * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #*/
+WORKINGDIR="${0%/*}"
+
 echo "================ Building NGINX ======================="
-docker build -t nginx-demo nginx/.
+docker build -t nginx-demo $WORKINGDIR/nginx/.
  
 echo "================ Building WORDPRESS ======================="
-docker build -t wordpress-demo wordpress/.
+docker build -t wordpress-demo $WORKINGDIR/wordpress/.
