@@ -37,14 +37,18 @@ docker run --name wordpress-demo \
            -e WORDPRESS_TABLE_PREFIX=wp_ \
            -v /tmp/wp:/var/www/html \
            -d kpnictc/wordpress-demo
- 
+
+echo "===== Give the container time to start - sleep 30 ===="
+sleep 30 
 echo "================ Start NGINX ======================="
 docker run --name nginx-demo \
            --link wordpress-demo:wordpress \
            -v /tmp/wp:/var/www/html \
            -p 8080:80 \
            -d kpnictc/nginx-demo
-           
+
+echo "===== Give the container time to start - sleep 10 ===="
+sleep 10            
 echo "================ Run some Tests ======================="
 echo "================ 1. list containers ======================="
 docker container ls -a
@@ -54,6 +58,7 @@ echo "================ 3. inspect containers ======================="
 docker container inspect wordpress-demo
 docker container inspect nginx-demo
 echo "================ 4. inspect port listening ======================="
+echo "the URL to check is ${HTTPS_URL}"
 # perform curl operation
 CURL_RETURN_CODE=0
 CURL_OUTPUT=`${CURL_CMD} ${CURL_MAX_CONNECTION_TIMEOUT} ${HTTPS_URL} 2> /dev/null` || CURL_RETURN_CODE=$?
