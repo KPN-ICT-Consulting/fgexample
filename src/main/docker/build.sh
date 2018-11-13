@@ -24,7 +24,7 @@
 WORKINGDIR="${0%/*}"
 
 echo "================ Building NGINX ======================="
-docker build -t nginx-demo $WORKINGDIR/nginx/.
+docker build -t kpnictc/nginx-demo $WORKINGDIR/nginx/.
  
 echo "================ Building WORDPRESS ======================="
-docker build -t wordpress-demo $WORKINGDIR/wordpress/.
+docker build -t kpnictc/wordpress-demo $WORKINGDIR/wordpress/.
