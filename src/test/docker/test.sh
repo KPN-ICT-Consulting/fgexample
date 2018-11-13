@@ -21,7 +21,8 @@
 # * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #*/
-HTTPS_URL="http://localhost:8080"
+URL=$(ip addr | grep inet | tr -s ' ' | cut -d ' ' -f 3 | tr -d '/')
+HTTPS_URL="http://$URL:8080"
 CURL_CMD="curl -w httpcode=%{http_code}"
 # -m, --max-time <seconds> FOR curl operation
 CURL_MAX_CONNECTION_TIMEOUT="-m 100"
