@@ -78,6 +78,8 @@ build:
       chmod 755 $SHIPPABLE_REPO_DIR/build/docker/build.sh &&
       $SHIPPABLE_REPO_DIR/build/docker/build.sh;
     - echo "==== Test containers ====" &&
+      mkdir -p $SHIPPABLE_REPO_DIR/test/docker &&
+      cp -r src/test/docker/* $SHIPPABLE_REPO_DIR/test/docker &&
       mkdir -p /tmp/wp &&
       mysql -e "CREATE USER wp@localhost IDENTIFIED BY 'wptest'; GRANT ALL ON *.* TO wp@localhost; FLUSH PRIVILEGES;" &&
       chmod 755 $SHIPPABLE_REPO_DIR/test/docker/test.sh &&
