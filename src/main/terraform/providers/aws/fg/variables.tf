@@ -21,50 +21,20 @@
 # * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #*/
 
-provider "aws" {
-	#assume_role {
-    #	role_arn     = "arn:aws:iam::ACCOUNT_ID:role/ROLE_NAME"
-    #	session_name = "SESSION_NAME"
-    #	external_id  = "EXTERNAL_ID"
-  	#}
-	region 					= "${var.region}"
+variable "region" {
+	description = "The region to run the TF scripts in"
 }
-
-module "security" {
-#outs:
-#     module.security.sg_alb_id
-#     module.security.sg_ecs_tasks_id
-#     module.security.sg_db_id
-	source = "./sg"
-	
-	vpc_id					= "${var.vpc_id}"
-	db_port 				= "${var.db_configuration["db.port"]}"
-	app_port 				= "${var.app_configuration["app.port"]}"
+variable "vpc_id" {
+	description = "The VPC id"
 }
-
-module "rds" {
-	source = "./rds"
-	
-	db_configuration		= "${var.db_configuration}"
-	db_options				= "${var.db_options}"
-	db_parameters			= "${var.db_parameters}"
-	
-	subnet_ids				= "${var.orange_subnet_ids}"
-	vpc_security_group_ids	= "${module.security.sg_db_id}"
-	
-	isStaging				= "${var.isStaging}"
+variable "subnet_ids" {
+	description = ""
+	type = "map"
 }
-
-module "fg" {
-#outs: 
-#	source = "./fg"
-
-	vpc_id				= "${var.vpc_id}"
-	
-	app_configuration	= "${var.app_configuration}"
-	
-	subnet_ids			= "${var.orange_subnet_ids}" #maybe use red instead of orange
-	
-	cloudwatch_prefix	= "${var.cloudwatch_prefix}"
-	region				= "${var.region}"
+variable "app_configuration" {
+	description = "The configuration of the application to deploy to fargate"
+	type = "map"
+}
+variable "cloudwatch_prefix" {
+	description = "Prefix for Cloudwatch to separate log groups"
 }
