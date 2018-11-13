@@ -24,10 +24,11 @@
 echo "================ Start WORDPRESS ======================="
 docker run --name wordpress-demo \
            -p 9000:9000 \
-           -e WORDPRESS_TABLE_PREFIX=wp_ \
-           -e WORDPRESS_DB_HOST=mysql \
-           -e WORDPRESS_DB_NAME=wordpressdb \
+           -e WORDPRESS_DB_HOST=127.0.0.1 \
+           -e WORDPRESS_DB_USER=wp \
            -e WORDPRESS_DB_PASSWORD=wptest \
+           -e WORDPRESS_DB_NAME=wordpressdb \
+           -e WORDPRESS_TABLE_PREFIX=wp_ \
            -v /tmp/wp:/var/www/html \
            -d wordpress-demo
  

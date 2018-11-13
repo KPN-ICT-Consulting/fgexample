@@ -79,6 +79,7 @@ build:
       $SHIPPABLE_REPO_DIR/build/docker/build.sh;
     - echo "==== Test containers ====" &&
       mkdir -p /tmp/wp &&
+      mysql -e "CREATE USER wp@localhost IDENTIFIED BY 'wptest'; GRANT ALL ON *.* TO wp@localhost; FLUSH PRIVILEGES;"
       chmod 755 $SHIPPABLE_REPO_DIR/test/docker/test.sh &&
       $SHIPPABLE_REPO_DIR/build/test/test.sh;
     - echo "==== Push containers to repo ====" &&
