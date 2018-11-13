@@ -21,7 +21,7 @@
 # * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #*/
-URL=$(ip addr | grep inet | tr -s ' ' | cut -d ' ' -f 3 | tr -d '/')
+URL=$(ip addr | grep inet | tr -s ' ' | cut -d ' ' -f 3 | tr -d '/' | awk '/172/{print}')
 HTTPS_URL="http://$URL:8080"
 CURL_CMD="curl -w httpcode=%{http_code}"
 # -m, --max-time <seconds> FOR curl operation
