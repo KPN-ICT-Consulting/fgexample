@@ -23,10 +23,13 @@
 #*/
 URL=$(ip addr | grep inet | tr -s ' ' | cut -d ' ' -f 3 | tr -d '/' | awk '/172/{print}')
 HTTPS_URL="http://$URL:8080"
-CURL_CMD="curl -w httpcode=%{http_code}"
+CURL_WRITE_OUT="-w http_code=%{http_code}"
 # -m, --max-time <seconds> FOR curl operation
 CURL_MAX_CONNECTION_TIMEOUT="-m 100"
 
+TEMP_WORKING_DIR=/tmp/wp
+echo "================ Create tmp path ======================="
+mkdir -p $TEMP_WORKING_DIR
 echo "================ Start WORDPRESS ======================="
 docker run --name wordpress-demo \
            -p 9000:9000 \
@@ -35,15 +38,17 @@ docker run --name wordpress-demo \
            -e WORDPRESS_DB_PASSWORD=wptest \
            -e WORDPRESS_DB_NAME=wordpressdb \
            -e WORDPRESS_TABLE_PREFIX=wp_ \
-           -v /tmp/wp:/var/www/html \
+           -v $TEMP_WORKING_DIR:/var/www/html \
            -d kpnictc/wordpress-demo
 
 echo "===== Give the container time to start - sleep 30 ===="
-sleep 30 
+sleep 30
+echo "===== Show the container has unpacked files in $TEMP_WORKING_DIR ===="
+ls -l $TEMP_WORKING_DIR
 echo "================ Start NGINX ======================="
 docker run --name nginx-demo \
            --link wordpress-demo:wordpress \
-           -v /tmp/wp:/var/www/html \
+           -v $TEMP_WORKING_DIR:/var/www/html \
            -p 8080:80 \
            -d kpnictc/nginx-demo
 
@@ -57,18 +62,21 @@ docker container ps
 echo "================ 3. inspect containers ======================="
 docker container inspect wordpress-demo
 docker container inspect nginx-demo
-echo "================ 4. inspect port listening ======================="
+echo "================ 4. show containers logs ======================="
+docker container logs wordpress-demo
+docker container logs nginx-demo
+echo "================ 5. inspect port listening ======================="
 echo "the URL to check is ${HTTPS_URL}"
 # perform curl operation
 CURL_RETURN_CODE=0
-CURL_OUTPUT=`${CURL_CMD} ${CURL_MAX_CONNECTION_TIMEOUT} ${HTTPS_URL} 2> /dev/null` || CURL_RETURN_CODE=$?
+CURL_OUTPUT=$(curl ${CURL_WRITE_OUT} ${CURL_MAX_CONNECTION_TIMEOUT} ${HTTPS_URL} 2> /dev/null) || CURL_RETURN_CODE=$?
 if [ ${CURL_RETURN_CODE} -ne 0 ]; then  
     echo "Curl connection failed with return code - ${CURL_RETURN_CODE}"
     exit 1;
 else
     echo "Curl connection success"
     # Check http code for curl operation/response in  CURL_OUTPUT
-    httpCode=$(echo "${CURL_OUTPUT}" | sed -e 's/.*\httpcode=//')
+    httpCode=$(echo "${CURL_OUTPUT}" | sed -e 's/.*\http_code=//')
     if [ ${httpCode} -ne 200 ]; then
         echo "Curl operation/command failed due to server return code - ${httpCode}"
         exit 1;
@@ -77,3 +85,9 @@ fi
 
 echo "================ TODO - ADD MORE TESTS ======================="
 
+echo "================ Clean up ======================="
+docker container stop nginx-demo
+docker container stop wordpress-demo
+docker container rm nginx-demo
+docker container rm wordpress-demo
+rm -R $TEMP_WORKING_DIR
