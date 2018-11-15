@@ -26,4 +26,4 @@ ADD conf /wp
 RUN chmod 755 /wp/install.sh
 
 RUN /wp/install.sh
-VOLUME ["/var/www/"]
+VOLUME ["/var/www/html"]

@@ -32,6 +32,7 @@ echo "================ Create tmp path ======================="
 mkdir -p $TEMP_WORKING_DIR
 echo "================ Create Wordpress DB ======================="
 mysql -e "CREATE USER wp@localhost IDENTIFIED BY 'wptest'; GRANT ALL ON *.* TO wp@localhost; FLUSH PRIVILEGES;"
+mysql -e 'create database wordpressdb;'
 echo "================ Start WORDPRESS ======================="
 docker run --name wordpress-demo \
            -p 9000:9000 \
