@@ -30,11 +30,13 @@ CURL_MAX_CONNECTION_TIMEOUT="-m 100"
 TEMP_WORKING_DIR=/tmp/wp
 echo "================ Create tmp path ======================="
 mkdir -p $TEMP_WORKING_DIR
+echo "================ Create Wordpress DB ======================="
+mysql -e "CREATE USER wp@localhost IDENTIFIED BY 'wptest'; GRANT ALL ON *.* TO wp@localhost; FLUSH PRIVILEGES;"
 echo "================ Start WORDPRESS ======================="
 docker run --name wordpress-demo \
            -p 9000:9000 \
            -e WORDPRESS_DB_HOST=127.0.0.1 \
-           -e WORDPRESS_DB_USER=wp \
+           -e WORDPRESS_DB_USER=wp@localhost \
            -e WORDPRESS_DB_PASSWORD=wptest \
            -e WORDPRESS_DB_NAME=wordpressdb \
            -e WORDPRESS_TABLE_PREFIX=wp_ \
