@@ -21,6 +21,7 @@
 # * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 # * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #*/
+EXIT_CODE=0
 URL=$(ip addr | grep inet | tr -s ' ' | cut -d ' ' -f 3 | tr -d '/' | awk '/172/{print}')
 HTTPS_URL="http://$URL:8080"
 CURL_WRITE_OUT="-w http_code=%{http_code}"
@@ -75,14 +76,14 @@ CURL_RETURN_CODE=0
 CURL_OUTPUT=$(curl ${CURL_WRITE_OUT} ${CURL_MAX_CONNECTION_TIMEOUT} ${HTTPS_URL} 2> /dev/null) || CURL_RETURN_CODE=$?
 if [ ${CURL_RETURN_CODE} -ne 0 ]; then  
     echo "Curl connection failed with return code - ${CURL_RETURN_CODE}"
-    exit 1;
+    EXIT_CODE = 1;
 else
     echo "Curl connection success"
     # Check http code for curl operation/response in  CURL_OUTPUT
     httpCode=$(echo "${CURL_OUTPUT}" | sed -e 's/.*\http_code=//')
     if [ ${httpCode} -ne 200 ]; then
         echo "Curl operation/command failed due to server return code - ${httpCode}"
-        exit 1;
+        EXIT_CODE = 1;
     fi
 fi
 
@@ -94,3 +95,5 @@ docker container stop wordpress-demo
 docker container rm nginx-demo
 docker container rm wordpress-demo
 rm -R $TEMP_WORKING_DIR
+
+exit $EXIT_CODE
