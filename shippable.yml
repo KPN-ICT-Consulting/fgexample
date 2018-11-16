@@ -45,6 +45,8 @@ env:
     - CODE_COVERAGE_DIR=$SHIPPABLE_REPO_DIR/shippable/codecoverage
     - TESTS_LOC_DIR=$SHIPPABLE_REPO_DIR/src/test
     - MOD_LOC=$SHIPPABLE_REPO_DIR/node_modules/.bin/
+    - MYSQL_BIND_ADDR=$(ip addr | grep inet | tr -s ' ' | cut -d ' ' -f 3 | tr -d '/' | awk '/172/{print}')
+    - SHIPPABLE_MYSQL_CMD="--bind-address=$MYSQL_BIND_ADDR"
 
 #matrix:
 

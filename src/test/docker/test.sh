@@ -22,6 +22,7 @@
 # * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #*/
 EXIT_CODE=0
+DB_HOST=$MYSQL_BIND_ADDR
 URL=$(ip addr | grep inet | tr -s ' ' | cut -d ' ' -f 3 | tr -d '/' | awk '/172/{print}')
 HTTPS_URL="http://$URL:8080"
 CURL_WRITE_OUT="-w http_code=%{http_code}"
@@ -32,12 +33,12 @@ TEMP_WORKING_DIR=/tmp/wp
 echo "================ Create tmp path ======================="
 mkdir -p $TEMP_WORKING_DIR
 echo "================ Create Wordpress DB ======================="
-mysql -e "CREATE USER wp@localhost IDENTIFIED BY 'wptest'; GRANT ALL ON *.* TO wp@localhost; FLUSH PRIVILEGES;"
-mysql -e 'create database wordpressdb;'
+mysql -e "CREATE USER wp@$DB_HOST IDENTIFIED BY 'wptest'; GRANT ALL ON *.* TO wp@$DB_HOST; FLUSH PRIVILEGES;"
+#mysql -e 'create database wordpressdb;'
 echo "================ Start WORDPRESS ======================="
-docker run --name wordpress-demo \
+docker run --name wordpress-demo \ [no connect to mysql and thus shutdown]
            -p 9000:9000 \
-           -e WORDPRESS_DB_HOST=127.0.0.1 \
+           -e WORDPRESS_DB_HOST=$DB_HOST \
            -e WORDPRESS_DB_USER=wp@localhost \
            -e WORDPRESS_DB_PASSWORD=wptest \
            -e WORDPRESS_DB_NAME=wordpressdb \
