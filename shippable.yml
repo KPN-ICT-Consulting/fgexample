@@ -87,7 +87,7 @@ build:
     - echo "==== Push containers to repo ====" &&
       docker images ls &&
       chmod 755 $SHIPPABLE_REPO_DIR/build/docker/release.sh &&
-      $SHIPPABLE_REPO_DIR/build/docker/build.sh;
+      $SHIPPABLE_REPO_DIR/build/docker/release.sh;
     - echo "==== Prepare the TF scripts ====" &&
       mkdir -p $SHIPPABLE_REPO_DIR/build/terraform &&
       cp -r src/main/terraform/* $SHIPPABLE_REPO_DIR/build/terraform &&
