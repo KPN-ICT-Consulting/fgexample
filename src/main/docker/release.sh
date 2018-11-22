@@ -23,8 +23,8 @@
 #*/
 WORKINGDIR="${0%/*}"
 
-echo "================ Building NGINX ======================="
-docker build -t kpnictc/nginx-demo:$BRANCH.BUILD_NUMBER $WORKINGDIR/nginx/.
+echo "================ Release NGINX ======================="
+docker push kpnictc/nginx-demo:$BRANCH.BUILD_NUMBER
  
-echo "================ Building WORDPRESS ======================="
-docker build -t kpnictc/wordpress-demo:$BRANCH.BUILD_NUMBER $WORKINGDIR/wordpress/.
+echo "================ release WORDPRESS ======================="
+docker push kpnictc/wordpress-demo:$BRANCH.BUILD_NUMBER

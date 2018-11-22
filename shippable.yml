@@ -85,11 +85,9 @@ build:
       chmod 755 $SHIPPABLE_REPO_DIR/test/docker/test.sh &&
       echo "==== Deactivated for now - $SHIPPABLE_REPO_DIR/test/docker/test.sh";
     - echo "==== Push containers to repo ====" &&
-      docker tag wordpress-demo kpnict/wordpress-demo:dev &&
       docker images ls &&
-      docker push kpnictc/wordpress-demo:dev &&
-      docker tag nginx-demo kpnictc/nginx-demo:dev &&
-      docker push kpnictc/nginx-demo:dev;
+      chmod 755 $SHIPPABLE_REPO_DIR/build/docker/release.sh &&
+      $SHIPPABLE_REPO_DIR/build/docker/build.sh;
     - echo "==== Prepare the TF scripts ====" &&
       mkdir -p $SHIPPABLE_REPO_DIR/build/terraform &&
       cp -r src/main/terraform/* $SHIPPABLE_REPO_DIR/build/terraform &&
