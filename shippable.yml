@@ -86,6 +86,7 @@ build:
       echo "==== Deactivated for now - $SHIPPABLE_REPO_DIR/test/docker/test.sh";
     - echo "==== Push containers to repo ====" &&
       docker tag wordpress-demo kpnict/wordpress-demo:dev &&
+      docker images ls &&
       docker push kpnictc/wordpress-demo:dev &&
       docker tag nginx-demo kpnictc/nginx-demo:dev &&
       docker push kpnictc/nginx-demo:dev;
