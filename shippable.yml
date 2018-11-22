@@ -83,7 +83,7 @@ build:
       mkdir -p $SHIPPABLE_REPO_DIR/test/docker &&
       cp -r src/test/docker/* $SHIPPABLE_REPO_DIR/test/docker &&
       chmod 755 $SHIPPABLE_REPO_DIR/test/docker/test.sh &&
-      $SHIPPABLE_REPO_DIR/test/docker/test.sh;
+      echo "==== Deactivated for now - $SHIPPABLE_REPO_DIR/test/docker/test.sh";
     - echo "==== Push containers to repo ====" &&
       docker push kpnictc/wordpress-demo:dev &&
       docker push kpnictc/nginx-demo:dev;
