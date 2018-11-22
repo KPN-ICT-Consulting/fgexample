@@ -37,7 +37,7 @@ branches:
 
 # Specify which services you need. This is only valid if you use the default Shippable image for your build
 services:
-  - mysql
+#  - mysql
 
 env:
   global:
