@@ -65,7 +65,7 @@ resource "aws_ecs_service" "demo" {
 	load_balancer {
 		target_group_arn 		= "${aws_alb_target_group.app.id}"
 		container_name   		= "demo"
-		container_port   		= "${var.app_configuration["app.port"]}"
+		container_port   		= "${var.app_configuration["app.front.port"]}"
 	}
 
 	depends_on 					= [

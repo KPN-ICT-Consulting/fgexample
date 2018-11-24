@@ -39,7 +39,7 @@ module "security" {
 	
 	vpc_id					= "${var.vpc_id}"
 	db_port 				= "${var.db_configuration["db.port"]}"
-	app_port 				= "${var.app_configuration["app.port"]}"
+	app_port 				= "${var.app_configuration["app.front.port"]}"
 }
 
 module "rds" {
