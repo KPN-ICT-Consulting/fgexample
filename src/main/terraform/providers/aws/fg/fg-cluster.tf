@@ -58,12 +58,12 @@ resource "aws_ecs_service" "demo" {
 	launch_type     			= "FARGATE"
 
 	network_configuration {
-		security_groups 		= ["${aws_security_group.ecs_tasks.id}"]
+		security_groups 		= ["${var.ecs_sg_id}"]
 		subnets         		= ["${var.subnet_ids}"]
 	}
 
 	load_balancer {
-		target_group_arn 		= "${aws_alb_target_group.wp.id}"
+		target_group_arn 		= "${aws_alb_target_group.app.id}"
 		container_name   		= "demo"
 		container_port   		= "${var.app_configuration["app.port"]}"
 	}

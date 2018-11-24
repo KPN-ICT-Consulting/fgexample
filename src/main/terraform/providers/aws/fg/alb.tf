@@ -24,7 +24,7 @@
 resource "aws_alb" "alb" {
 	name            		= "TF-ECS-ALB-APP"
 	subnets         		= ["${var.subnet_ids}"]
-	security_groups 		= ["${aws_security_group.sg_alb.id}"]
+	security_groups 		= ["${var.alb_sg_id}"]
 }
 
 resource "aws_alb_target_group" "app" {

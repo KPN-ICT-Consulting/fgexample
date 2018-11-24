@@ -35,6 +35,12 @@ variable "app_configuration" {
 	description = "The configuration of the application to deploy to fargate"
 	type = "map"
 }
+variable "alb_sg_id" {
+	description = ""
+}
+variable "ecs_sg_id" {
+	description = ""
+}
 variable "cloudwatch_prefix" {
 	description = "Prefix for Cloudwatch to separate log groups"
 }

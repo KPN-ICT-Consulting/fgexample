@@ -64,6 +64,8 @@ module "fg" {
 	app_configuration	= "${var.app_configuration}"
 	
 	subnet_ids			= "${var.orange_subnet_ids}" #maybe use red instead of orange
+	alb_sg_id			= "${module.security.sg_alb_id}"
+	ecs_sg_id			= "${module.security.sg_ecs_tasks_id}"
 	
 	cloudwatch_prefix	= "${var.cloudwatch_prefix}"
 	region				= "${var.region}"
