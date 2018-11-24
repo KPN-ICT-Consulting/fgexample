@@ -22,6 +22,7 @@
 #*/
 FROM nginx:latest
 
+RUN mv /etc/nginx/conf.d/default.conf /etc/nginx/conf.d/default.bck
 COPY conf/wordpress.conf /etc/nginx/conf.d
 
 VOLUME ["/var/www/html"]
