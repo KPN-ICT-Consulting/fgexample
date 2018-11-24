@@ -15,7 +15,7 @@
 	{
 		"name": "nginx",
 		"image": "${image_front}",
-		"cpu": "${cpu_frontend}",
+		"cpu": "${cpu_front}",
 		"memory": "${memory_front}",
 		"essential": true,
 		"portMappings": [
