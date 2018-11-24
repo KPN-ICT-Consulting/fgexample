@@ -57,7 +57,7 @@ module "rds" {
 
 module "fg" {
 #outs: 
-#	source = "./fg"
+	source = "./fg"
 
 	vpc_id				= "${var.vpc_id}"
 	
