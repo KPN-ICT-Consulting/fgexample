@@ -29,7 +29,7 @@ variable "vpc_id" {
 }
 variable "subnet_ids" {
 	description = ""
-	type = "map"
+	type = "list"
 }
 variable "app_configuration" {
 	description = "The configuration of the application to deploy to fargate"
