@@ -35,12 +35,12 @@ variable "app_configuration" {
 	type = "map"
 	default = {
 		app.backend.image			= "kpnictc/wordpress-demo:dev"
-		app.backend.port			= "9000"
+		app.backend.port			= 9000
 		app.front.image				= "kpnictc/nginx-demo:dev"
-		app.front.port				= "8080"
+		app.front.port				= 8080
 		app.count 					= "2"
-		fargate.cpu					= "256" #Fargate instance CPU units to provision (1 vCPU = 1024 CPU units)
-		fargate.memory				= "512" #Fargate instance memory to provision (in MiB)
+		fargate.cpu					= 256 #Fargate instance CPU units to provision (1 vCPU = 1024 CPU units)
+		fargate.memory				= 512 #Fargate instance memory to provision (in MiB)
 	}
 }
 variable "db_configuration" {
@@ -50,7 +50,7 @@ variable "db_configuration" {
 		db.name                 			= "wp"
 		db.engine							= "mysql"
 		db.engine_version       			= "5.7"
-		db.port								= "3306"
+		db.port								= 3306
 		db.allow_major_version_upgrade		= true
 		db.auto_minor_version_upgrade		= true
 		db.enabled_cloudwatch_logs_exports	= "alert,audit,error,general,listener,slowquery,trace"

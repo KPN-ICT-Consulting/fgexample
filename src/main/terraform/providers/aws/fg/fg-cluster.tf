@@ -36,24 +36,33 @@ data "template_file" "task-def" {
   }
 }
 
-resource "aws_ecs_cluster" "demo" {
+resource "aws_ecs_cluster" "demo_cluster" {
 	name 						= "tf-ecs-cluster"
 }
 
-resource "aws_ecs_task_definition" "demo" {
-	family                   	= "app"
+resource "aws_ecs_task_definition" "demo_td" {
+	family                   	= "demo"
 	network_mode             	= "awsvpc"
 	requires_compatibilities 	= ["FARGATE"]
 	cpu                      	= "${var.app_configuration["fargate.cpu"]}"
 	memory                   	= "${var.app_configuration["fargate.memory"]}"
 	
 	container_definitions 	 	= "${data.template_file.task-def.rendered}"
+	
+	volume {
+		name 					= "wordpress_service-storage"
+		host_path 				= "/tmp/demo"
+		
+		docker_volume_configuration {
+			scope         		= "task"
+		}
+	}
 }
 
 resource "aws_ecs_service" "demo" {
 	name            			= "tf-ecs-service"
-	cluster         			= "${aws_ecs_cluster.demo.id}"
-	task_definition 			= "${aws_ecs_task_definition.demo.arn}"
+	cluster         			= "${aws_ecs_cluster.demo_cluster.id}"
+	task_definition 			= "${aws_ecs_task_definition.demo_td.arn}"
 	desired_count   			= "${var.app_configuration["app.count"]}"
 	launch_type     			= "FARGATE"
 
