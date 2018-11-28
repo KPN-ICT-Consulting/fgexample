@@ -42,7 +42,7 @@ variable "site_aliases" {
 variable "price_class" {
 	description = ""
 }
-variable "geo_restrictions" {
+variable "geo_restriction" {
 	description = ""
 }
 variable "geo_list" {

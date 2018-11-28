@@ -77,7 +77,7 @@ module "cdn" {
 	
 	alb_dns_name		= "${module.fg.alb_dns_name}"
 	site_name			= "${var.site["site_name"]}"
-	site_origin_id		= "${var.site["site_originId"]}"
+	site_originId		= "${var.site["site_originId"]}"
 	site_comment		= "${var.site["site_comment"]}"
 	site_root_object	= "${var.site["site_root_object"]}"
 	site_aliases		= "${var.site["site_aliases"]}"
