@@ -30,6 +30,26 @@ variable "staging" {
 #	type = "string"
 #	default = BRANCH_BASED_REGION
 #}
+variable "site" {
+	description = "The configuration for the site"
+	type = "map"
+	default = {
+		domain						= "fg-testing.kpn-ictc-mapps.com"
+		domain_weight				= 10
+		domain_identifier			= "Staging"
+		
+		site_originId				= "fg-website-test.kpn-ictc-mapps.com"
+		site_name					= "fg-website-test.kpn-ictc-mapps.com"
+		site_root_object			= "index.php"
+		site_error_object			= "error.php"
+		site_name_tag				= "FG WP example"
+		site_comment				= "RTFM"
+		site_aliases				= "fg-testing.kpn-ictc-mapps.com"
+		price_class					= "PriceClass_100"
+		georestriction				= "whitelist"
+		geolist						= "NL,BE"
+	}
+}
 variable "app_configuration" {
 	description = "The configuration of the application to deploy to fargate"
 	type = "map"

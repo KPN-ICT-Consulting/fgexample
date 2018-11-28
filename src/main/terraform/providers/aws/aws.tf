@@ -57,6 +57,7 @@ module "rds" {
 
 module "fg" {
 #outs: 
+#   module.fg.alb_dns_name
 	source = "./fg"
 
 	vpc_id				= "${var.vpc_id}"
@@ -69,4 +70,32 @@ module "fg" {
 	
 	cloudwatch_prefix	= "${var.cloudwatch_prefix}"
 	region				= "${var.region}"
+}
+
+module "cdn" {
+	source = "./cdn"
+	
+	alb_dns_name		= "${module.fg.alb_dns_name}"
+	site_name			= "${var.site["site_name"]}"
+	site_origin_id		= "${var.site["site_originId"]}"
+	site_comment		= "${var.site["site_comment"]}"
+	site_root_object	= "${var.site["site_root_object"]}"
+	site_aliases		= "${var.site["site_aliases"]}"
+	price_class			= "${var.site["price_class"]}"
+	geo_restriction		= "${var.site["georestriction"]}"
+	geo_list			= "${var.site["geolist"]}"
+	domain_identifier	= "${var.site["domain_identifier"]}"
+	
+}
+
+
+module "dns" {
+	source = "./dns"
+	
+	domain				= "${var.site["domain"]}"
+	domain_weight		= "${var.site["domain_weight"]}"
+	domain_identifier	= "${var.site["domain_identifier"]}"
+	cdn_domain_name		= "${module.cdn.cdn_domain}"
+	cdn_domain_id		= "${module.cdn.cdn_hosted_zone_id}"
+	root_zone_id		= "${var.root_zone_id}"
 }

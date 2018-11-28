@@ -21,46 +21,33 @@
 # * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #*/
 
-variable "region" {
-	description = "The region to run the TF scripts in"
-}
-variable "vpc_id" {
-	description = "The VPC id"
-}
-variable "root_zone_id" {
-	description = "The root zone id"
-}
-variable "site" {
-	description = "The configuration of the cdn site for application"
-	type = "map"
-}
-variable "app_configuration" {
-	description = "The configuration of the application to deploy to fargate"
-	type = "map"
-}
-variable "db_configuration" {
-	description = "The configuration of the application db to deploy to RDS"
-	type = "map"
-}
-variable "db_options" {
-	description = "The database options"
-	type = "list"
-}
-variable "db_parameters" {
-	description = "The database parameters"
-	type = "list"
-}
-variable "red_subnet_ids" {
+variable "alb_dns_name" {
 	description = ""
-	type = "list"
 }
-variable "orange_subnet_ids" {
+variable "site_name" {
 	description = ""
-	type = "list"
 }
-variable "cloudwatch_prefix" {
-	description = "Prefix for Cloudwatch to separate log groups"
+variable "site_originId" {
+	description = ""
 }
-variable "isStaging" {
-	description = "set to true if the Staging environment should be created. For Production set to false."
+variable "site_comment" {
+	description = ""
+}
+variable "site_root_object" {
+	description = ""
+}
+variable "site_aliases" {
+	description = ""
+}
+variable "price_class" {
+	description = ""
+}
+variable "geo_restrictions" {
+	description = ""
+}
+variable "geo_list" {
+	description = ""
+}
+variable "domain_identifier" {
+	description = ""
 }

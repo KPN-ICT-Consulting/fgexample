@@ -21,46 +21,24 @@
 # * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #*/
 
-variable "region" {
-	description = "The region to run the TF scripts in"
+variable "domain" {
+	description = "DNS root domain"
 }
-variable "vpc_id" {
-	description = "The VPC id"
+variable "domain_weight" {
+	description = "DNS root domain weight"
+}
+variable "domain_identifier" {
+	description = "DNS root domain identifier"
+}
+variable "cdn_domain_name" {
+	description = "Cloudformation domain name"
+}
+variable "cdn_domain_id" {
+	description = "Cloudformation domain identifier - the hosted zone id"
 }
 variable "root_zone_id" {
-	description = "The root zone id"
+	description = "The root zone identifier"
 }
-variable "site" {
-	description = "The configuration of the cdn site for application"
-	type = "map"
-}
-variable "app_configuration" {
-	description = "The configuration of the application to deploy to fargate"
-	type = "map"
-}
-variable "db_configuration" {
-	description = "The configuration of the application db to deploy to RDS"
-	type = "map"
-}
-variable "db_options" {
-	description = "The database options"
-	type = "list"
-}
-variable "db_parameters" {
-	description = "The database parameters"
-	type = "list"
-}
-variable "red_subnet_ids" {
-	description = ""
-	type = "list"
-}
-variable "orange_subnet_ids" {
-	description = ""
-	type = "list"
-}
-variable "cloudwatch_prefix" {
-	description = "Prefix for Cloudwatch to separate log groups"
-}
-variable "isStaging" {
-	description = "set to true if the Staging environment should be created. For Production set to false."
-}
+
+
+

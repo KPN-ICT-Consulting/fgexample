@@ -43,6 +43,8 @@ module "aws" {
   	red_subnet_ids		= "${data.terraform_remote_state.initial.red_subnet_ids}"
   	orange_subnet_ids	= "${data.terraform_remote_state.initial.orange_subnet_ids}"
   	
+  	root_zone_id		= "${data.terraform_remote_state.initial.root_zone_id}"
+  	site				= "${var.site}"
   	app_configuration	= "${var.app_configuration}"
   	db_configuration	= "${var.db_configuration}"
   	db_options			= "${var.db_options}"
