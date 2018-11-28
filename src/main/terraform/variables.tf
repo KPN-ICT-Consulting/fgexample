@@ -57,7 +57,7 @@ variable "app_configuration" {
 		app.backend.image			= "kpnictc/wordpress-demo:dev"
 		app.backend.port			= 9000
 		app.front.image				= "kpnictc/nginx-demo:dev"
-		app.front.port				= 8080
+		app.front.port				= 80
 		app.count 					= "2"
 		fargate.cpu					= 256 #Fargate instance CPU units to provision (1 vCPU = 1024 CPU units)
 		fargate.memory				= 512 #Fargate instance memory to provision (in MiB)
