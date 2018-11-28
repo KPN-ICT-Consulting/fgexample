@@ -73,7 +73,7 @@ variable "db_configuration" {
 		db.port								= 3306
 		db.allow_major_version_upgrade		= true
 		db.auto_minor_version_upgrade		= true
-		db.enabled_cloudwatch_logs_exports	= "alert,audit,error,general,listener,slowquery,trace"
+		db.enabled_cloudwatch_logs_exports	= "audit,error,general,slowquery"
 		db.maintenance_window				= "Mon:00:00-Mon:03:00"
 		db.backup_retention_period			= 7
 		db.backup_window					= "03:00-06:00"
@@ -118,7 +118,7 @@ variable "db_options" {
 	        	},
 	        	{
 	          		name  = "SERVER_AUDIT_FILE_ROTATIONS"
-	          		value = "37"
+	          		value = "36"
 	        	}
       		]
     	}
