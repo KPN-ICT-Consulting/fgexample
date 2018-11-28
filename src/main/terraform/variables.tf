@@ -82,7 +82,7 @@ variable "db_configuration" {
 		db.deletion_protection				= false
 		db.storage_type         			= "gp2"
 		db.allocated_storage				= 10
-		db.instance_class       			= "db.t2.micro"
+		db.instance_class       			= "db.t2.small"
 		db.storage_encrypted				= true
 		db.option_group_name				= "wordpress-db-options"
 		db.option_group_description 		= "TF managed db option group for Wordpress DB"

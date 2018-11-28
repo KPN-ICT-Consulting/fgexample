@@ -52,10 +52,6 @@ resource "aws_ecs_task_definition" "demo_td" {
 	volume {
 		name 					= "wordpress_service-storage"
 		host_path 				= "/tmp/demo"
-		
-		docker_volume_configuration {
-			scope         		= "task"
-		}
 	}
 }
 
